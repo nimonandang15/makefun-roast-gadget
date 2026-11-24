@@ -24,3 +24,8 @@ if (/[\r\n]/.test(text)) {
 
 fs.mkdirSync("/output", { recursive: true });
 fs.writeFileSync("/output/entry.txt", text, "utf8");
+
+// Round-trip check: read the file back and confirm it matches exactly.
+if (fs.readFileSync("/output/entry.txt", "utf8") !== text) {
+  throw new Error("round-trip check failed: entry.txt does not match text");
+}
